@@ -245,15 +245,7 @@ export default function Home() {
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="section-kicker">Experience</p>
-              <h2 className="text-2xl font-semibold text-slate-900 md:text-3xl">
-                Career progression with quantified, ATS-friendly impact.
-              </h2>
             </div>
-            <p className="max-w-xl text-sm leading-6 text-slate-600">
-              Stronger action verbs, clearer outcomes, and denser technical
-              keywords help this section read better for both people and hiring
-              systems.
-            </p>
           </div>
 
           <div className="mt-8 space-y-6 border-l border-slate-200 pl-5">
