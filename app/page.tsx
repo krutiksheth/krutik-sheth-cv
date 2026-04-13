@@ -151,14 +151,7 @@ export default function Home() {
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="section-kicker">Selected Work</p>
-              <h2 className="text-2xl font-semibold text-slate-900 md:text-3xl">
-                Real delivery stories, framed like product case studies.
-              </h2>
             </div>
-            <p className="max-w-xl text-sm leading-6 text-slate-600">
-              Instead of generic portfolio tiles, these cards show outcome,
-              system context, and technical depth from actual delivery work.
-            </p>
           </div>
 
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
