@@ -36,32 +36,88 @@ export function StickyNav({ items }: StickyNavProps) {
     );
 
     sections.forEach((section) => observer.observe(section));
-
     return () => observer.disconnect();
   }, [items]);
 
   return (
-    <div className="animate-enter sticky top-4 z-20 mb-6 hidden justify-center lg:flex">
-      <nav className="glass-panel flex items-center gap-2 rounded-full px-3 py-2 text-sm text-slate-700 shadow-lg shadow-slate-900/5">
-        {items.map((item) => {
-          const isActive = active === item.href;
+    <header className="nav-header reveal">
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "0 1.5rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          height: "56px",
+        }}
+      >
+        {/* Monogram */}
+        <span
+          className="ff-mono"
+          style={{
+            fontSize: "0.7rem",
+            letterSpacing: "0.22em",
+            color: "var(--text-3)",
+          }}
+        >
+          KS<span style={{ color: "var(--accent)" }}>_</span>
+        </span>
 
-          return (
-            <a
-              key={item.href}
-              className={[
-                "rounded-full px-4 py-2 transition",
-                isActive
-                  ? "bg-slate-950 text-white shadow-sm"
-                  : "hover:bg-white/70 hover:text-slate-950",
-              ].join(" ")}
-              href={item.href}
-            >
-              {item.label}
-            </a>
-          );
-        })}
-      </nav>
-    </div>
+        {/* Desktop nav */}
+        <nav
+          style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}
+          className="hidden lg:flex"
+        >
+          {items.map((item) => {
+            const isActive = active === item.href;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className="ff-mono"
+                style={{
+                  fontSize: "0.62rem",
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  padding: "0.5rem 1rem",
+                  borderRadius: "2px",
+                  transition: "color 0.2s",
+                  color: isActive ? "var(--accent)" : "var(--text-3)",
+                  position: "relative",
+                }}
+              >
+                {item.label}
+                {isActive && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: "1rem",
+                      right: "1rem",
+                      height: "1px",
+                      background: "var(--accent)",
+                    }}
+                  />
+                )}
+              </a>
+            );
+          })}
+        </nav>
+
+        {/* Mobile: active section indicator */}
+        <span
+          className="lg:hidden ff-mono"
+          style={{
+            fontSize: "0.6rem",
+            letterSpacing: "0.25em",
+            color: "var(--text-3)",
+            textTransform: "uppercase",
+          }}
+        >
+          {items.find((i) => i.href === active)?.label ?? "Menu"}
+        </span>
+      </div>
+    </header>
   );
 }
