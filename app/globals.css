@@ -26,6 +26,12 @@ html {
   scroll-behavior: smooth;
 }
 
+/* svh fallback for older Safari — hero section */
+.hero-section {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
 body {
   background: var(--bg);
   color: var(--text-1);
@@ -285,8 +291,19 @@ body::after {
 
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  /* Make reveal elements immediately visible instead of staying at opacity:0 */
+  .reveal {
+    opacity: 1;
+    transform: none;
     animation: none !important;
+  }
+
+  .cursor-blink {
+    animation: none !important;
+    opacity: 1;
+  }
+
+  *, *::before, *::after {
     transition: none !important;
   }
 }

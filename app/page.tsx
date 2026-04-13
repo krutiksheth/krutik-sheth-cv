@@ -22,7 +22,6 @@ export default function Home() {
       {/* ─── HERO ─── */}
       <section
         style={{
-          minHeight: "100svh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
@@ -30,7 +29,7 @@ export default function Home() {
           paddingBottom: "4rem",
           borderBottom: "1px solid var(--border)",
         }}
-        className="px-6 md:px-12 lg:px-20"
+        className="hero-section px-6 md:px-12 lg:px-20"
       >
         <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%" }}>
           {/* Eyebrow */}
