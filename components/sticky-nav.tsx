@@ -13,6 +13,7 @@ type StickyNavProps = {
 
 export function StickyNav({ items }: StickyNavProps) {
   const [active, setActive] = useState<string>(items[0]?.href ?? "");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const sections = items
@@ -38,6 +39,14 @@ export function StickyNav({ items }: StickyNavProps) {
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, [items]);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handler = () => setMenuOpen(false);
+    document.addEventListener("click", handler);
+    return () => document.removeEventListener("click", handler);
+  }, [menuOpen]);
 
   return (
     <header className="nav-header reveal">
@@ -105,19 +114,100 @@ export function StickyNav({ items }: StickyNavProps) {
           })}
         </nav>
 
-        {/* Mobile: active section indicator */}
-        <span
+        {/* Mobile: hamburger button */}
+        <button
           className="lg:hidden ff-mono"
+          onClick={(e) => {
+            e.stopPropagation();
+            setMenuOpen((v) => !v);
+          }}
+          aria-label="Toggle navigation"
           style={{
-            fontSize: "0.6rem",
-            letterSpacing: "0.25em",
-            color: "var(--text-3)",
-            textTransform: "uppercase",
+            display: "flex",
+            flexDirection: "column",
+            gap: "5px",
+            padding: "6px",
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
           }}
         >
-          {items.find((i) => i.href === active)?.label ?? "Menu"}
-        </span>
+          <span
+            style={{
+              display: "block",
+              width: "22px",
+              height: "1px",
+              background: menuOpen ? "var(--accent)" : "var(--text-3)",
+              transition: "transform 0.2s, background 0.2s",
+              transform: menuOpen ? "translateY(6px) rotate(45deg)" : "none",
+            }}
+          />
+          <span
+            style={{
+              display: "block",
+              width: "22px",
+              height: "1px",
+              background: menuOpen ? "var(--accent)" : "var(--text-3)",
+              transition: "opacity 0.2s, background 0.2s",
+              opacity: menuOpen ? 0 : 1,
+            }}
+          />
+          <span
+            style={{
+              display: "block",
+              width: "22px",
+              height: "1px",
+              background: menuOpen ? "var(--accent)" : "var(--text-3)",
+              transition: "transform 0.2s, background 0.2s",
+              transform: menuOpen ? "translateY(-6px) rotate(-45deg)" : "none",
+            }}
+          />
+        </button>
       </div>
+
+      {/* Mobile dropdown menu */}
+      {menuOpen && (
+        <nav
+          className="lg:hidden"
+          onClick={(e) => e.stopPropagation()}
+          style={{
+            borderTop: "1px solid var(--border)",
+            background: "rgba(9, 9, 11, 0.97)",
+            backdropFilter: "blur(24px)",
+          }}
+        >
+          {items.map((item) => {
+            const isActive = active === item.href;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className="ff-mono"
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "1rem 1.5rem",
+                  fontSize: "0.62rem",
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  color: isActive ? "var(--accent)" : "var(--text-3)",
+                  borderBottom: "1px solid var(--border)",
+                  transition: "color 0.2s",
+                }}
+              >
+                {item.label}
+                {isActive && (
+                  <span style={{ color: "var(--accent)", fontSize: "0.5rem" }}>
+                    ●
+                  </span>
+                )}
+              </a>
+            );
+          })}
+        </nav>
+      )}
     </header>
   );
 }

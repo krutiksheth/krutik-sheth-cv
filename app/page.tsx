@@ -506,12 +506,7 @@ export default function Home() {
                 style={{ padding: "1.75rem 2rem" }}
               >
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.35rem",
-                  }}
-                  className="md:flex-row md:items-start md:justify-between md:gap-6"
+                  className="flex flex-col gap-[0.35rem] md:flex-row md:items-start md:justify-between md:gap-6"
                 >
                   <div>
                     <h3
